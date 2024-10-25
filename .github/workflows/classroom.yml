@@ -1,0 +1,96 @@
+name: Autograding Tests
+'on':
+  - push
+  - repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Install dependencies
+        run: |
+          pip install pytest
+          pip install numpy
+
+      - name: ClassDecorators1 Test
+        id: classdecorators_1
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: ClassDecorators1
+          command: pytest -vk "test_ClassDecorators1"
+          timeout: 20
+          max-score: 1
+
+      - name: ClassDecorators2 Test
+        id: classdecorators_2
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: ClassDecorators2
+          command: pytest -vk "test_ClassDecorators2"
+          timeout: 20
+          max-score: 1
+
+      - name: ClassDecorators3 Test
+        id: classdecorators_3
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: ClassDecorators3
+          command: pytest -vk "test_ClassDecorators3"
+          timeout: 20
+          max-score: 1
+
+      - name: ClassOperators1 Test
+        id: classoperators_1
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: ClassOperators1
+          command: pytest -vk "test_ClassOperators1"
+          timeout: 20
+          max-score: 1
+
+      - name: ClassOperators2 Test
+        id: classoperators_2
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: ClassOperators2
+          command: pytest -vk "test_ClassOperators2"
+          timeout: 20
+          max-score: 1
+
+      - name: ClassOperators3 Test
+        id: classoperators_3
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: ClassOperators3
+          command: pytest -vk "test_ClassOperators3"
+          timeout: 20
+          max-score: 1
+
+      - name: CustomDecorators1 Test
+        id: customdecorators_1
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: CustomDecorators1
+          command: pytest -vk "test_CustomDecorators1"
+          timeout: 20
+          max-score: 1
+
+      - name: Autograding Reporter
+        uses: classroom-resources/autograding-grading-reporter@v1
+        env:
+          CLASSDECORATORS_1_RESULTS: "${{steps.classdecorators_1.outputs.result}}"
+          CLASSDECORATORS_2_RESULTS: "${{steps.classdecorators_2.outputs.result}}"
+          CLASSDECORATORS_3_RESULTS: "${{steps.classdecorators_3.outputs.result}}"
+          CLASSOPERATORS_1_RESULTS: "${{steps.classoperators_1.outputs.result}}"
+          CLASSOPERATORS_2_RESULTS: "${{steps.classoperators_2.outputs.result}}"
+          CLASSOPERATORS_3_RESULTS: "${{steps.classoperators_3.outputs.result}}"
+          CUSTOMDECORATORS_1_RESULTS: "${{steps.customdecorators_1.outputs.result}}"
+        with:
+          runners: classdecorators_1,classdecorators_2,classdecorators_3,classoperators_1,classoperators_2,classoperators_3,customdecorators_1
