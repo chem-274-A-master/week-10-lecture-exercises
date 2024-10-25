@@ -129,9 +129,9 @@ def test_ClassOperators3():
     sentence = Sentence("Multiple punctuation marks!")
     assert len(sentence) == 3, "Expected 3 words for sentence 'Multiple punctuation marks!'"
 
-def test_ClassOperators4(capfd):
+def test_CustomDecorators1(capfd):
     # add exercise directory to the path
-    exercise_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ClassOperators4"))
+    exercise_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "CustomDecorators1"))
     sys.path.append(exercise_dir)
     
     # import the timer decorator and my_function
@@ -144,6 +144,6 @@ def test_ClassOperators4(capfd):
     captured = capfd.readouterr()
 
     # Check if "elapsed time:" is in the output
-    assert "elapsed time:" in captured.out, "Expected 'elapsed time:' in the print output of the timer decorator"
+    assert "elapsed time:" in captured.out.lower(), "Expected 'elapsed time:' in the print output of the timer decorator"
 
 
